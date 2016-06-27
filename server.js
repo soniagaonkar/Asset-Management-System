@@ -12,7 +12,7 @@ var fs             = require('fs');
 // configuration ===========================================
     
 // config files
-//var db = require('./config/db');  //uncomment to connect to database
+var db = require('./config/db');  //uncomment to connect to database
 
 // set our port
 var port = process.env.PORT || 8080;

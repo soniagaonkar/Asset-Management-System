@@ -1,3 +1,4 @@
+
 /*
 'use strict';
 
@@ -30,3 +31,4 @@ angular.module('dashboardApp').factory('config', function Config() {
 });
 
 */
+

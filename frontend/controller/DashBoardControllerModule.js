@@ -1,30 +1,37 @@
 
 var scm = angular.module('DashBoardControllerModule',['angularUtils.directives.dirPagination', 'ngCookies']);
-scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','config', '$stateParams', '$location', '$localStorage', '$modal', function($scope,$rootscope,DashBoardService,config,$stateParams,$location,$localStorage, $modal,$cookies,$cookieStore) {
-    $rootscope.host = config.dashboard.host;
+scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','$stateParams', '$location', '$localStorage', '$modal', function($scope,$rootscope,DashBoardService,config,$stateParams,$location,$localStorage, $modal,$cookies,$cookieStore) {
+   // $rootscope.host = config.dashboard.host;
     
     $scope.login = function(){
 
 
         var inputData = {
             username : $scope.username,
-            softLayerID : $scope.softLayerID,
-            softLayerKey : $scope.softLayerKey
+            password : $scope.password,
         }
+        
+        console.log("ppppppppppppppppppp");
+        console.log(inputData);
+        console.log("ppppppppppppppppppp");
 
-        if(inputData.username && inputData.softLayerID && inputData.softLayerKey) {
+        if(inputData.username && inputData.password) {
+            
+            console.log("22222222222222");
 
             DashBoardService.login(inputData).success(function (data) {
+                
+                       console.log(data);
+                       console.log("33333333333333");
 
                 if (data.loginData.loginSuccess == true){
+                    
+                           console.log("4444444444444444");
 
                     $rootscope.username = $scope.username
-                    $rootscope.softLayerID = $scope.softLayerID
-                    $rootscope.softLayerKey = $scope.softLayerKey
 
                     //set cookie  & redirect
                     $scope.loginSuccess = data.loginData.loginSuccess;
-
                     $scope.$storage = $localStorage.$default({
                         loggedin: true,
                         username: $scope.username
@@ -32,24 +39,9 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
 
                     $scope.$storage = $localStorage;
                     $localStorage.loggedin = true;
-                    $localStorage.username = $scope.username;
-                    $localStorage.softLayerID = $scope.softLayerID;
-                   
-                    //$location.path("/inventory");
-                    
-                    DashBoardService.saveLogin(inputData).success(function (data) {
+                    $localStorage.username = $scope.username;                               
                         
-                        //$rootscope.inventories = data.dataInventories.inventories
-                        //$rootscope.VMInventories = data.dataInventories.VMInventories
-                        $rootscope.loggedin = $localStorage.loggedin;
-                        $rootscope.username = $localStorage.username;
-                        $rootscope.softLayerID = $localStorage.softLayerID;
-                        
-                        $location.path("/inventory");
-
-                   }).error(function (data,status) {
-                        console.log("error");
-                   });
+                    $location.path("/dashboard");             
 
                 } else {
                     //show error
@@ -60,26 +52,6 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
             });
         }
     }
-
-    
-    
-   DashBoardService.getInventories($localStorage).success(function (data) {
-
-        $scope.showSpin = false;
-        $rootscope.inventories = data.dataInventories.inventories
-        $rootscope.VMInventories = data.dataInventories.VMInventories
-        $rootscope.loggedin = $localStorage.loggedin;
-        $rootscope.username = $localStorage.username;
-        $rootscope.softLayerID = $localStorage.softLayerID;
-     
-        $scope.sort = function(keyname){
-		      $scope.sortKey = keyname; //set the sortKey to the param passed
-		      $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-	    }
-       
-   }).error(function (data,status) {
-            console.log("error");
-   });
     
    
    //logout function

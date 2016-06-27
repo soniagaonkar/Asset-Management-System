@@ -38,3 +38,24 @@ thor.save(function(err, thor) {
     console.dir(thor);
 });
 */
+
+/*
+var assetsSchema = new mongoose.Schema({
+    name: { type: String },
+    primaryOwner: { type: String },
+    lastUpdated: { type: Date, default: Date.now },
+});
+
+var assets = mongoose.model('assets', assetsSchema);
+
+var thor = new assets({
+     name: "laptop",
+    primaryOwner: "Sonia"
+});
+
+thor.save(function(err, thor) {
+    if (err) return console.error(err);
+    console.dir(thor);
+});
+
+console.log("lkkkkkkkkkkkkkkkkk")*/

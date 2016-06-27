@@ -1,5 +1,6 @@
-/*
+
 var config = config || {};
+/*
 
 config.local ={
     app: 'dashboard-local',
@@ -36,4 +37,5 @@ config.production ={
         version: 'v1'
     }
 };
+
 */

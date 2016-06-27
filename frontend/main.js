@@ -9,5 +9,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: 'templates/login.html',
             controller: 'DashBoardController'
         })
+    
+        .state('dashboard', {
+            url:'/dashboard',
+            templateUrl: 'templates/dashboard.html',
+            controller: 'DashBoardController'
+        })
        
 }]);
