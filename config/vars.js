@@ -16,6 +16,7 @@ switch(exports.ENV){
         exports.HOST = "127.0.0.1";
         exports.PORT = "";
         exports.ROOT = "/api";
+        exports.SECRET = "myAssetAppSecret";
         break;
 
 }
