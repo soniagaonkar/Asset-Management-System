@@ -1,38 +1,49 @@
+<link href="bootstrap/css/login.css" rel="stylesheet">
 <div class="container">
-    <div class="row">
-        <div class="col-md-7 col-md-offset-2">
-
-            <div class="panel panel-login" style="z-index:0; margin-top:-34px;">
-                <div class="panel-body">
-                    <div class="col-lg-12">
-                        <form id="login-form" method="POST" role="form" style="display: block;">
-                    
-                            <div class="form-group" style="margin-top: 20px; font-family: helvetica; font-size: 22px; text-align: center;">
-                               Asset Management System (ASM)
-                            </div>
-                            
-                            <div class="form-group has-feedback has-feedback-left" style="margin-top: 20px;">
-                                <input type="text" name="username" id="username" ng-model="username" class="form-control" required>
-                            </div>
-
-                            <div class="form-group has-feedback has-feedback-left" style="margin-top: 20px;">
-                                <input type="text" name="password" id="password" ng-model="password" class="form-control" required>
-                            </div>
-    
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6 col-sm-offset-4">
-                                        <input type="hidden" name="referer" id="referer">
-                                        <button type="submit" class="btn buttonClass" ng-click="login()" >
-                                            <i class="icon-user icon-white"></i> Login
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div class="row" style="margin-left:-270px;">        
+        <div class="pen-title">
+            <h1> Asset Management System (ASM)</h1>
         </div>
+
+        <div class="module form-module">
+            <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                <div class="tooltip">Click Me</div>
+            </div>
+            <div class="form">
+                <h2>Login to your account</h2>
+                <form id="login-form" method="POST" role="form">
+                    <input type="text" name="username" id="username" ng-model="username" class="form-control" placeholder="Username" required/>
+                    <input type="password" name="password" id="password" ng-model="password" class="form-control" placeholder="Password" required />
+                    <input type="hidden" name="referer" id="referer">
+                    <button type="submit" ng-click="login()">Login</button>
+                </form>
+            </div>
+            <div class="form">
+                <h2>Create an account</h2>
+                <form>
+                    <input type="text" placeholder="Username"/>
+                    <input type="password" placeholder="Password"/>
+                    <input type="email" placeholder="Email Address"/>
+                    <input type="tel" placeholder="Phone Number"/>
+                    <button>Register</button>
+                </form>
+            </div>            
+        </div>        
     </div>
 </div>
+
+
+<script>
+ /*   // Toggle Function
+    $('.toggle').click(function(){
+        // Switches the Icon
+        $(this).children('i').toggleClass('fa-pencil');
+        // Switches the forms  
+        $('.form').animate({
+            height: "toggle",
+            'padding-top': 'toggle',
+            'padding-bottom': 'toggle',
+            opacity: "toggle"
+        }, "slow");
+    });*/
+</script>

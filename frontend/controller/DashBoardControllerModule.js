@@ -1,6 +1,6 @@
 
 var scm = angular.module('DashBoardControllerModule',['angularUtils.directives.dirPagination', 'ngCookies']);
-scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','$stateParams', '$location', '$localStorage', '$modal', function($scope,$rootscope,DashBoardService,config,$stateParams,$location,$localStorage, $modal,$cookies,$cookieStore) {
+scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','$stateParams', '$location', '$localStorage', '$modal', function($scope,$rootscope,DashBoardService,$stateParams,$location,$localStorage, $modal) {
    // $rootscope.host = config.dashboard.host;
     
     $scope.login = function(){
@@ -9,29 +9,16 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         var inputData = {
             username : $scope.username,
             password : $scope.password,
-        }
-        
-        console.log("ppppppppppppppppppp");
-        console.log(inputData);
-        console.log("ppppppppppppppppppp");
+        }       
 
         if(inputData.username && inputData.password) {
-            
-            console.log("22222222222222");
 
-            DashBoardService.login(inputData).success(function (data) {
-                
-                       console.log(data);
-                       console.log("33333333333333");
-
-                if (data.loginData.loginSuccess == true){
-                    
-                           console.log("4444444444444444");
+            DashBoardService.login(inputData).success(function (data) {             
 
                     $rootscope.username = $scope.username
+                    $rootscope.loggedin = true;
 
                     //set cookie  & redirect
-                    $scope.loginSuccess = data.loginData.loginSuccess;
                     $scope.$storage = $localStorage.$default({
                         loggedin: true,
                         username: $scope.username
@@ -43,27 +30,51 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
                         
                     $location.path("/dashboard");             
 
-                } else {
-                    //show error
-                    $scope.loginSuccess = data.loginData.loginSuccess;
-                }
             }).error(function (data,status) {
-                console.log("error");
+                console.log("Incorrect Username/Password");
             });
         }
     }
     
+    
+    DashBoardService.test($localStorage).success(function (data) {
+
+        $rootscope.loggedin = $localStorage.loggedin;
+        $rootscope.username = $localStorage.username;
+      
+       
+   }).error(function (data,status) {
+            console.log("error");
+   });
+    
+    
+   DashBoardService.assets($localStorage).success(function (data) {
+
+        $rootscope.loggedin = $localStorage.loggedin;
+        $rootscope.username = $localStorage.username;
+        $rootscope.assetsData = data.assets;
+       
+       console.log(data);
+       console.log("pppppppppppp");
+      
+       
+   }).error(function (data,status) {
+            console.log("error");
+   });
+    
    
    //logout function
-   $rootscope.logout = function(){
+   $rootscope.logout = function(){ console.log("AAAAAAAAAAAAAAAAAAAA");
        
         DashBoardService.logout($localStorage).success(function (data) {
             $scope.$storage = $localStorage.$default({
                 loggedin: false
             });
+            delete $rootscope.username;
+            delete $rootscope.loggedin;
 
             $localStorage.$reset();
-            $location.path("/dashboard"); //redirect to login page
+            $location.path("/login"); //redirect to login page
 
         }).error(function (data,status) {
             console.log("error");

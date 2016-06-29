@@ -14,7 +14,6 @@ LoginCont.login = [
 ];
 
 LoginCont.logout = [
-    login.allowCrossDomain,
     login.logout
 ];
 

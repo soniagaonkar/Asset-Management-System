@@ -15,5 +15,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: 'templates/dashboard.html',
             controller: 'DashBoardController'
         })
+    
+        .state('assets', {
+            url:'/assets',
+            templateUrl: 'templates/assets.html',
+            controller: 'DashBoardController'
+        })
        
 }]);

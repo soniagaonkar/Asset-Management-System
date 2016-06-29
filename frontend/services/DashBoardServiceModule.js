@@ -14,9 +14,22 @@ ssm.factory('DashBoardService',function($http){
             console.log("kkkkkkkkkkkkkkkk");
             
             return $http.post(base_url + '/login', inputData);
-        }
+        },
+        
+        
+        test:function(inputData) {
+             return $http.post(base_url + '/login', inputData);
+        },
 
-       
+        logout:function(inputData) {
+        
+            return $http.get(base_url + '/logout', inputData);
+        },
+        
+        assets:function(inputData) {
+        
+            return $http.get(base_url + '/assets', inputData);
+        }
 
 	}
 })
