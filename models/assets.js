@@ -4,8 +4,8 @@ var assetsSchema = new mongoose.Schema({
     name: { type: String },
     primaryOwner: { type: String },
     currentOwner: { type: String },
-	is_free: { type: Boolean , default: true},
-	isDeleted: { type: Number, default: 0}
+	isFree: { type: Boolean , default: true},
+	isDeleted: { type: Boolean , default: false}
 	category: { type: String },
 	subCategory: { type: String },
 	description: { type: String },
