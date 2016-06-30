@@ -9,7 +9,11 @@ AssetsCont.getAssets = [
 ];
 
 AssetsCont.addAsset = [
-    asset.addAsset
+    assets.addAsset
+];
+
+AssetsCont.addHistory = [
+    assets.addHistory
 ];
 
 
