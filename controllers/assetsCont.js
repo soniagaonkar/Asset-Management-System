@@ -11,4 +11,18 @@ AssetsCont.addAsset = [
     assets.addAsset
 ];
 
+AssetsCont.addHistory = [
+    assets.addHistory
+];
 
+AssetsCont.modifyAsset = [
+    assets.modifyAsset
+];
+
+AssetsCont.deleteAsset = [
+    assets.deleteAsset
+];
+
+AssetsCont.softDelAsset = [
+    assets.softDelAsset
+];

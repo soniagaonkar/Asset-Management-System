@@ -9,7 +9,9 @@ module.exports.set = function(appObj,configVars){
 	
 	appObj.put(v1 +'assets', assetsCont.addHistory, lib.outputAssets);   
 	
-	appObj.post(v1 +'assets', assetsCont.addAsset, lib.outputAssets);  	
+	appObj.post(v1 +'assets', assetsCont.addAsset, lib.outputAssets);
+  	
+	//appObj.delete(v1 +'assets', assetsCont.deleteAsset, lib.outputAssets);
     
 }
 
