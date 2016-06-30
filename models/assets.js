@@ -15,8 +15,8 @@ var assetsSchema = new mongoose.Schema({
 	recCreatedDate:{ type: Date, default: Date.now },
 	recUpdatedDate:{ type: Date, default: Date.now },
 	history:[{owner: { type: String, required: true }, 
-			fromDate: { type: Date, required: true }, 
-			toDate: { type: Date, required: true }, 
+			assignFromDate: { type: Date }, 
+			assignToDate: { type: Date }, 
 			recCreationDate:{ type: Date, default: Date.now }
 			}]
 });
