@@ -6,6 +6,12 @@ var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var fs             = require('fs');
+var redis = require('redis');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var RedisStore = require('connect-redis')(expressSession);
+var cluster = require('cluster');
+var client = redis.createClient(); //CREATE REDIS CLIENT
 
 
 
@@ -27,6 +33,38 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
+
+
+
+/*app.use(cookieParser());
+app.use(expressSession({
+  secret: '7acaa0fb-8b28-4e75-a95b-0ae7ca3f4b98',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))*/
+
+//Redis session
+app.use(cookieParser());
+app.use(expressSession({
+      store: new RedisStore({
+        host: "localhost",
+        port:"6379",
+        pass: "h8TXL7]z",
+        client: client,
+        ttl: 1800
+      }),
+      secret: "6acaa0fb-2b40-4e75-a85b-0ae7ca3f6b96",
+      duration: "30 * 60 * 1000",
+      activeDuration:"5 * 60 * 1000",
+      saveUninitialized:false,
+      resave:true,
+      rolling:true,
+      cookie: { 
+        maxAge: 1800000
+      }
+}));
+
 
 // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override')); 
