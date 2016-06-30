@@ -17,5 +17,6 @@ module.exports.set = function(appObj,configVars){
   	
 	appObj.delete(v1 +'assets/:assetId', assetsCont.deleteAsset, lib.outputAssets);
     
+	appObj.post(v1 +'assets/:assetId/request', assetsCont.requestAsset, lib.outputAssets);
 }
 

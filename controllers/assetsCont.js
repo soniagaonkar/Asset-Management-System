@@ -23,6 +23,12 @@ AssetsCont.deleteAsset = [
     assets.deleteAsset
 ];
 
-AssetsCont.softDelAsset = [
-    assets.softDelAsset
+AssetsCont.assignAsset = [
+    assets.assignAsset
 ];
+
+AssetsCont.requestAsset = [
+    assets.requestAsset
+];
+
+
