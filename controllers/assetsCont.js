@@ -31,4 +31,8 @@ AssetsCont.requestAsset = [
     assets.requestAsset
 ];
 
+AssetsCont.viewRequests = [
+    assets.viewRequests
+];
+
 

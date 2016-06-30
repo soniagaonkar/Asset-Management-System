@@ -4,7 +4,7 @@ var requestSchema = new mongoose.Schema({
     assetId: { type: String },
 	message: { type: String },
 	duration: { type: Number },
-	status: { type: String },
+	status: { type: String , default: "New"},
 	requestorId: { type: String },
 	primaryOwnerId: { type: String },
     createdDate: { type: Date, default: Date.now },
