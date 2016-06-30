@@ -1,4 +1,3 @@
-
 var assets = require('./../lib/middleware/assets');
 
 
@@ -11,10 +10,5 @@ AssetsCont.getAssets = [
 AssetsCont.addAsset = [
     assets.addAsset
 ];
-
-AssetsCont.addHistory = [
-    assets.addHistory
-];
-
 
 
