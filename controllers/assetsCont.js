@@ -35,4 +35,7 @@ AssetsCont.viewRequests = [
     assets.viewRequests
 ];
 
+AssetsCont.getAssetbyId = [
+    assets.getAssetbyId
+];
 
