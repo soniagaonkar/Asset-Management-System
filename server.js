@@ -14,7 +14,6 @@ var cluster = require('cluster');
 var client = redis.createClient(); //CREATE REDIS CLIENT
 
 
-
 // configuration ===========================================
     
 // config files
@@ -33,16 +32,6 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
-
-
-
-/*app.use(cookieParser());
-app.use(expressSession({
-  secret: '7acaa0fb-8b28-4e75-a95b-0ae7ca3f4b98',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))*/
 
 //Redis session
 app.use(cookieParser());
@@ -64,7 +53,6 @@ app.use(expressSession({
         maxAge: 1800000
       }
 }));
-
 
 // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override')); 
