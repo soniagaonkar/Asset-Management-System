@@ -1,4 +1,5 @@
 var assets = require('./../lib/middleware/assets');
+var utils = require('./../lib/middleware/utils');
 
 
 var AssetsCont = module.exports;
@@ -32,6 +33,7 @@ AssetsCont.requestAsset = [
 ];
 
 AssetsCont.viewRequests = [
+    utils.tokenAuthentication,
     assets.viewRequests
 ];
 

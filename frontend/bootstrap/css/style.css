@@ -397,25 +397,24 @@ img {
 
 
 /* Table CSS */
-.CSSTable {
+/*.CSSTable {
     width: 100px;
 }
 
 td, th {
-    /*width: 10rem;*/
     height: 3.5rem;
     border: 1px solid lightblue;
     text-align: left;
 }
 th {
-    background: #5383aa; /*lightblue;*/
+    background: #5383aa;
     border-color: white;
     color: #fff;
     font-weight: bold;
     font-size: 13px;
     border: 1px solid #fff;
 
-}
+}*/
 
 .searchResult {
     margin-top:20px;
@@ -543,7 +542,7 @@ th {
  * =============================== */
 
 
-.btn {
+/*.btn {
     cursor: pointer;
     background: #27ae60;
     display: inline-block;
@@ -573,7 +572,7 @@ th {
 
 .btn--blue:active {
     background: #2980b9;
-}
+}*/
 
 p img {
     max-width: 200px;
