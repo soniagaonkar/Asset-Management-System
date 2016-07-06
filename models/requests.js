@@ -4,6 +4,7 @@ var requestSchema = new mongoose.Schema({
     assetId: { type: String },
 	message: { type: String },
 	duration: { type: Number },
+	durationRange: { type: String },
 	status: { type: String , default: "New"},
 	requestorId: { type: String },
 	primaryOwnerId: { type: String },
