@@ -20,7 +20,10 @@ module.exports.set = function(appObj,configVars){
 	appObj.post(v1 +'assets/:assetId/request', assetsCont.requestAsset, lib.outputAssets);
 	
 	appObj.get(v1 +'requests', assetsCont.viewRequests, lib.outputListRequests);
+	
+	appObj.post(v1 +'assets/:assetId/assign', assetsCont.assignAsset, lib.outputAssets);
     
     appObj.get(v1 +'assets/getAssetbyId/:assetId', assetsCont.getAssetbyId, lib.outputListAssets);   
+
 }
 
