@@ -27,6 +27,7 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
                     $scope.$storage = $localStorage;
                     $localStorage.loggedin = true;
                     $localStorage.username = data.loginId;                               
+                    $localStorage.token = data.token;                               
                     $rootscope.token = data.token;
                     $rootscope.role = data.role;
                         
@@ -42,7 +43,10 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     DashBoardService.test($localStorage).success(function (data) {
 
         $rootscope.loggedin = $localStorage.loggedin;
-        $rootscope.username = $localStorage.username;      
+        $rootscope.username = $localStorage.username; 
+        $rootscope.token = data.token;
+        $rootscope.role = data.role;
+    
        
     }).error(function (data,status) {
             console.log("error");
@@ -56,6 +60,10 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         $rootscope.username = $localStorage.username;
         $scope.assetsData = data.assets;   
         $scope.assetsType = $stateParams.type;   
+        
+        
+        console.log(data)
+        console.log("kkkkkkkkkkkkkkkkkkk")
         
     }).error(function (data,status) {
         console.log("error");
@@ -133,7 +141,7 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     
     //delete asset function    
     $scope.deleteAsset = function(id) {
-        DashBoardService.deleteAsset(id).success(function (data) {
+        DashBoardService.deleteAsset($localStorage, id).success(function (data) {
            loadAssets();
         }).error(function (data,status) {
             console.log("error");
@@ -157,19 +165,22 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     }
    
    
+   //load Requests again
+   loadRequests = function() {
+       DashBoardService.getRequests($localStorage).success(function (data) {
+            $scope.requestData = data.requests;          
+        }).error(function (data,status) {
+            console.log("error");
+        });                 
+   }
+   
+   
+   
    
    //get requests function  
-   if($location.path()=="/requests") {  console.log("AAAAAAAAAAAAAAAAAAA");
+   if($location.path()=="/requests") {  
         DashBoardService.getRequests($localStorage).success(function (data) {
-
-            //$rootscope.loggedin = $localStorage.loggedin;
-            //$rootscope.username = $localStorage.username;
-            $scope.requestData = data.requests;   
-            //$scope.assetsType = $stateParams.type;   
-       
-            console.log(data);
-            console.log("qqqqqqqqqqqqqqqqqqqq");
-        
+            $scope.requestData = data.requests;          
         }).error(function (data,status) {
             console.log("error");
         });         
@@ -198,6 +209,18 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     
     
     
+    //reject asset function
+    $scope.rejectRequest = function(id) { 
+
+        DashBoardService.rejectRequest($localStorage, id).success(function (data) {
+           loadRequests();
+       
+        }).error(function (data,status) {
+            console.log("error");
+        });
+    }
+    
+    
    
    //logout function
    $rootscope.logout = function(){
@@ -210,6 +233,7 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
             delete $rootscope.loggedin;
 
             $localStorage.$reset();
+            delete $localStorage;
             $location.path("/login"); //redirect to login page
 
         }).error(function (data,status) {

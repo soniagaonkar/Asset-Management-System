@@ -55,3 +55,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         
        
 }]);
+
+
+app.run(function($rootScope, $location, $window,$timeout, DashBoardService, $localStorage) {
+    $rootScope.$on("$stateChangeStart", function(event, nextRoute, currentRoute) {
+        if($localStorage.loggedin && $localStorage.username){
+            $rootScope.loggedin = $localStorage.loggedin;
+            $rootScope.username = $localStorage.username;
+            $rootScope.token = $localStorage.token;
+            
+        }else{
+            delete $localStorage;
+            $location.path("/login");
+        } 
+    });
+});
