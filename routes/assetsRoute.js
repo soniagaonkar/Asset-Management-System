@@ -8,6 +8,8 @@ module.exports.set = function(appObj,configVars){
     appObj.get(v1 +'assets', assetsCont.getAssets, lib.outputListAssets); 
 	
 	appObj.get(v1 +'assets/:assetId', assetsCont.getAssetbyId, lib.outputListAssets); 
+	
+	appObj.get(v1 +'assets/:assetId/history', assetsCont.getAssetHistory, lib.outputListAssetHistory); 
     
     appObj.get(v1 +'assets/:type', assetsCont.getAssets, lib.outputListAssets);  
 	

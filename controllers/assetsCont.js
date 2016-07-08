@@ -49,3 +49,7 @@ AssetsCont.getAssetbyId = [
     assets.getAssetbyId
 ];
 
+AssetsCont.getAssetHistory = [
+	utils.tokenAuthentication,
+    assets.getAssetHistory
+];
