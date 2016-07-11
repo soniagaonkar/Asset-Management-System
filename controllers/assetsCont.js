@@ -53,3 +53,9 @@ AssetsCont.getAssetHistory = [
 	utils.tokenAuthentication,
     assets.getAssetHistory
 ];
+
+AssetsCont.rejectRequest = [
+	utils.tokenAuthentication,
+    assets.rejectRequest
+];
+

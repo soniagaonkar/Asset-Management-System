@@ -1,11 +1,11 @@
+
+
 var ssm=angular.module('DashBoardServiceModule',[]);
 
-//ssm.factory('DashBoardService',function($http,config){
-ssm.factory('DashBoardService',function($http){
-    //  var base_url = config.dashboard.url + config.dashboard.version;
+ssm.factory('DashBoardService',function($http, $location){
     
-    // console.log(base_url);
-    var  base_url = "http://localhost:8080/api/v1";
+    var base_url = $location.protocol() + '://'+ $location.host()+':'+  $location.port()+'/api/v1'    
+    base_url = base_url ? base_url : "http://localhost:8080/api/v1";    
     
 	return {
         login:function(inputData) {
@@ -21,10 +21,12 @@ ssm.factory('DashBoardService',function($http){
         },
         
         assets:function(inputData,type) {
-            if(type)
-                return $http.get(base_url + '/assets/'+type, inputData);                
-            else 
-                return $http.get(base_url + '/assets', inputData);
+        
+            if(type){
+                return $http.get(base_url + '/assets/type/'+type, { headers: {'x-access-token': inputData.token }});                
+            }else {
+                return $http.get(base_url + '/assets', { headers: {'x-access-token': inputData.token }});
+            }
         },
         
         addAsset:function(inputData) {
@@ -32,24 +34,27 @@ ssm.factory('DashBoardService',function($http){
         },      
 
         getAssetbyID:function(inputData, assetID) {
-             return $http.get(base_url + '/assets/getAssetbyId/'+assetID, inputData);
+             return $http.get(base_url + '/assets/getAssetbyId/'+assetID, { headers: {'x-access-token': inputData.token }});
         },
         
         editAsset:function(inputData, assetID) {
              return $http.put(base_url + '/assets/'+assetID, inputData);
         },
         
-        deleteAsset:function(assetID) {
-             return $http.delete(base_url + '/assets/'+assetID);
+        deleteAsset:function(inputData, assetID) {
+             return $http.delete(base_url + '/assets/'+assetID, { headers: {'x-access-token': inputData.token }});
         },
         
-        getRequests:function(inputData) {  console.log("CCCCCCCCCCCCCCCC");      
+        getRequests:function(inputData) { 
              return $http.get(base_url + '/requests/', { headers: {'x-access-token': inputData.token }});
         },
         
-        //'assets/:assetId/request
         requestAsset:function(inputData, id) {
              return $http.post(base_url + '/assets/'+id+'/request', inputData);
         }, 
+        
+        rejectRequest:function(inputData, requestId) {
+             return $http.put(base_url + '/requests/'+requestId+'/reject', inputData);
+        },
 	}
 })
