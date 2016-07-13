@@ -1,5 +1,3 @@
-
-
 var ssm=angular.module('DashBoardServiceModule',[]);
 
 ssm.factory('DashBoardService',function($http, $location){
@@ -13,7 +11,7 @@ ssm.factory('DashBoardService',function($http, $location){
         },        
         
         test:function(inputData) {
-             return $http.post(base_url + '/login', inputData);
+            return $http.post(base_url + '/login', inputData);
         },
 
         logout:function(inputData) {        
@@ -30,31 +28,44 @@ ssm.factory('DashBoardService',function($http, $location){
         },
         
         addAsset:function(inputData) {
-             return $http.post(base_url + '/assets', inputData);
+            return $http.post(base_url + '/assets', inputData);
         },      
 
         getAssetbyID:function(inputData, assetID) {
-             return $http.get(base_url + '/assets/getAssetbyId/'+assetID, { headers: {'x-access-token': inputData.token }});
+            return $http.get(base_url + '/assets/'+assetID, { headers: {'x-access-token': inputData.token }});
         },
         
         editAsset:function(inputData, assetID) {
-             return $http.put(base_url + '/assets/'+assetID, inputData);
+            return $http.put(base_url + '/assets/'+assetID, inputData);
         },
         
         deleteAsset:function(inputData, assetID) {
-             return $http.delete(base_url + '/assets/'+assetID, { headers: {'x-access-token': inputData.token }});
+            return $http.delete(base_url + '/assets/'+assetID, { headers: {'x-access-token': inputData.token }});
         },
         
         getRequests:function(inputData) { 
-             return $http.get(base_url + '/requests/', { headers: {'x-access-token': inputData.token }});
+            return $http.get(base_url + '/requests/', { headers: {'x-access-token': inputData.token }});
         },
         
         requestAsset:function(inputData, id) {
-             return $http.post(base_url + '/assets/'+id+'/request', inputData);
+            return $http.post(base_url + '/assets/'+id+'/request', inputData);
         }, 
         
         rejectRequest:function(inputData, requestId) {
-             return $http.put(base_url + '/requests/'+requestId+'/reject', inputData);
+            return $http.put(base_url + '/requests/'+requestId+'/reject', inputData);
         },
+        
+        assignAsset:function(inputData, id) {
+            return $http.post(base_url + '/assets/'+id+'/assign', inputData);
+        },
+        
+        getUsers:function(inputData) { 
+            return $http.get(base_url + '/users/', { headers: {'x-access-token': inputData.token }});
+        },
+        
+        viewAsset:function(inputData, id) { 
+            return $http.get(base_url + '/assets/' + id, { headers: {'x-access-token': inputData.token }});
+        }
+        
 	}
 })

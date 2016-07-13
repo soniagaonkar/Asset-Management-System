@@ -1,4 +1,4 @@
-var app = angular.module('dashboardApp', ['ui.router','DashBoardControllerModule','DashBoardServiceModule','showDetailControllerModule', 'ngStorage', 'ui.bootstrap', 'ui.bootstrap.modal']);
+var app = angular.module('dashboardApp', ['ui.router','DashBoardControllerModule','DashBoardServiceModule','showDetailControllerModule', 'ngStorage', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'ngAnimate', 'ui.bootstrap']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
@@ -45,7 +45,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: 'templates/requests.html',
             controller: 'DashBoardController'
         }) 
-
     
         .state('requestAsset', {
             url:'/requestAsset/:reqAssetId',
@@ -53,7 +52,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             controller: 'DashBoardController'
         })
         
+        .state('assignAsset', {
+            url:'/assignAsset/:assetId',
+            templateUrl: 'templates/assignAsset.html',
+            controller: 'DashBoardController'
+        })  
+    
+        .state('assignAssetTo', {
+            url:'/assignAsset/:assetId/:assignTo',
+            templateUrl: 'templates/assignAsset.html',
+            controller: 'DashBoardController'
+        })  
        
+        .state('viewAsset', {
+            url:'/viewAsset/:assetId',
+            templateUrl: 'templates/viewAsset.html',
+            controller: 'DashBoardController'
+        })
 }]);
 
 
