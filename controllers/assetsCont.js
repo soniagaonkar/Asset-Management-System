@@ -9,6 +9,12 @@ AssetsCont.getAssets = [
     assets.getAssets
 ];
 
+AssetsCont.getAssignedAssets = [
+	utils.tokenAuthentication,
+    assets.getAssignedAssets
+];
+
+
 AssetsCont.addAsset = [
 	utils.tokenAuthentication,
     assets.addAsset

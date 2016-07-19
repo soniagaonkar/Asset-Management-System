@@ -13,6 +13,8 @@ module.exports.set = function(appObj,configVars){
     
     appObj.get(v1 +'assets/type/:type', assetsCont.getAssets, lib.outputListAssets);   
 	
+	appObj.get(v1 +'assignedAssets/', assetsCont.getAssignedAssets, lib.outputListAssets);   
+	
 	appObj.put(v1 +'assets/:assetId', assetsCont.modifyAsset, lib.outputAssets);   
 	
 	appObj.post(v1 +'assets', assetsCont.addAsset, lib.outputAssets);
