@@ -70,7 +70,7 @@ routers.set(app, fs);
 app.listen(port);               
 
 // shoutout to the user                     
-console.log('Magic happens on port ' + port);
+console.log('Api is running at port ' + port);
 
 // expose app           
 exports = module.exports = app;         
