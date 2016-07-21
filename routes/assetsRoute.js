@@ -26,6 +26,8 @@ module.exports.set = function(appObj,configVars){
 	appObj.get(v1 +'requests', assetsCont.viewRequests, lib.outputListRequests);
 	
 	appObj.post(v1 +'assets/:assetId/assign', assetsCont.assignAsset, lib.outputAssets);
+	
+	appObj.put(v1 +'assets/:assetId/assign', assetsCont.assignAsset, lib.outputAssets);
     
     appObj.put(v1 +'requests/:requestId/reject', assetsCont.rejectRequest, lib.outputOK);
 
