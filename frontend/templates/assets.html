@@ -14,12 +14,39 @@
                         <i class="fa fa-table"></i> Assets
                     </li>
                 </ol>
-                    <a href="/#/addAsset"><button type="button" class="btn btn-xs btn-info">Add Asset</button></a> 
+                    <a href="/#/addAsset" ng-if="role=='admin'"><button type="button" class="btn btn-xs btn-info">Add Asset</button></a> 
             </div>
+            
+            <div class="col-lg-4">     
+                <form id="addAsset-form" name="addAsset-form" method="POST" role="form">               
+                     <div class="form-group">
+                        <label>Filter assets by owner</label>
+                        <select ng-model="selOwnerName"  ng-init="selOwnerName = selOwnerName" ng-options="user.loginId as user.loginId for user in users" required class="form-control"></select>
+                        <button type="submit" class="btn btn-default" ng-click="searchAsset()">Search</button>
+                    </div>
+                </form>
+            </div>
+            
+            
+          
+            
         </div>
         <!-- /.row -->
+        
+          <div class="row">
+            <div class="col-xs-2">Filter assets by owner:</div>
+            <div class="col-xs-3">div 2</div>
+            <div class="col-xs-3">div 3</div>
+            </div>
+
+        
+        <br />
+        <div class="col-lg-10" ng-if="noAssetsFound">
+            <div class="alert alert-warning" role="alert">{{noAssetsFound}}</div>
+        </div>
+        
     
-        <div class="col-lg-12">
+        <div class="col-lg-12" ng-if="assetsData.length>0">
             <h3 style="text-transform: capitalize;">{{assetsType}} Assets</h3>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
@@ -32,14 +59,16 @@
                             <th>To Date</th>
                             <th>Category</th>
                             <th>Sub Category</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th ng-if="role=='admin'">Edit</th>
+                            <th ng-if="role=='admin'">Delete</th>
+                            <th ng-if="role=='admin'">Disable</th>
                             <th>Request asset</th>
-                            <th>Assign asset</th>
+                            <th ng-if="role=='admin'">Assign asset</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="asset in assetsData">
+                        <!--tr ng-repeat="asset in assetsData"-->
+                        <tr dir-paginate="asset in assetsData | orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
                             <td><a href="/#/viewAsset/{{asset._id}}">{{asset.name}}</a></td>
                             <td>{{asset.primaryOwner}}</td>
                             <td>{{asset.currentOwner}}</td>
@@ -47,22 +76,27 @@
                             <td>{{asset.toDate | date:"MM/dd/yyyy" }}</td>
                             <td>{{asset.category}}</td>
                             <td>{{asset.subCategory}}</td>
-                            <td>
-                                <span ng-if="asset.primaryOwner==username">
+                            <td  ng-if="role=='admin'">
+                                <span ng-if="role=='admin' && asset.primaryOwner==username">
                                     <a href="/#/editAsset/{{asset._id}}"><button type="button" class="btn btn-xs btn-default">Edit</button></a>
                                 </span>
                             </td>
-                             <td>
-                                <span ng-if="asset.primaryOwner==username">
+                            <td ng-if="role=='admin'">
+                                <span ng-if="role=='admin' && asset.primaryOwner==username">
                                      <button type="button" class="btn btn-xs btn-default" confirmed-click="deleteAsset(asset._id)" ng-confirm-click="Are you sure you want to delete this asset?">Delete</button>
                                 </span>
                             </td>
-                            <td>
-                                <span ng-if="asset.primaryOwner!=username">
-                                    <a href="/#/requestAsset/{{asset._id}}"><button type="button" class="btn btn-xs btn-default" >Request</button></a>
+                            <td ng-if="role=='admin'">
+                                <span ng-if="role=='admin' && asset.primaryOwner==username">
+                                     <button type="button" class="btn btn-xs btn-default" confirmed-click="disableAsset(asset._id)" ng-confirm-click="Are you sure you want to disable this asset?">Disable</button>
                                 </span>
                             </td>
                             <td>
+                                <span ng-if="asset.primaryOwner!=username && asset.currentOwner!=username">
+                                    <a href="/#/requestAsset/{{asset._id}}"><button type="button" class="btn btn-xs btn-default">Request</button></a>
+                                </span>
+                            </td>
+                            <td ng-if="role=='admin'">
                                 <span ng-if="role=='admin' && asset.primaryOwner==username">
                                     <a href="/#/assignAsset/{{asset._id}}"><button type="button" class="btn btn-xs btn-default" >Assign</button></a>
                                 </span>
@@ -70,10 +104,13 @@
                         </tr>
                     </tbody>
                 </table>
+                <br>
+                <dir-pagination-controls direction-links="true" boundary-links="true"></dir-pagination-controls> 
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </div><!-- /#page-wrapper -->
+
 
 <script>
 function confirmDelete() {

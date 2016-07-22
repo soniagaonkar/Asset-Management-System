@@ -27,6 +27,10 @@ ssm.factory('DashBoardService',function($http, $location){
             }
         },
         
+        searchAssets:function(inputData) {       
+                return $http.get(base_url + '/assets?primaryOwnerId='+inputData.primaryOwnerId, { headers: {'x-access-token': inputData.token }});
+        },
+        
         addAsset:function(inputData) {
             return $http.post(base_url + '/assets', inputData);
         },      
@@ -41,6 +45,10 @@ ssm.factory('DashBoardService',function($http, $location){
         
         deleteAsset:function(inputData, assetID) {
             return $http.delete(base_url + '/assets/'+assetID, { headers: {'x-access-token': inputData.token }});
+        },
+        
+        disableAsset:function(inputData, assetID) {
+            return $http.put(base_url + '/assets/'+assetID+'/disable', inputData);
         },
         
         getRequests:function(inputData) { 

@@ -1,6 +1,6 @@
 
 var scm = angular.module('DashBoardControllerModule',['angularUtils.directives.dirPagination', 'ngCookies']);
-scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','$stateParams', '$location', '$localStorage', '$modal', function($scope,$rootscope,DashBoardService,$stateParams,$location,$localStorage, $modal) {
+scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService','$stateParams', '$location', '$localStorage', '$modal', '$window', function($scope,$rootscope,DashBoardService,$stateParams,$location,$localStorage,$modal,$window) {
    // $rootscope.host = config.dashboard.host;    
 
     $scope.login = function() {
@@ -32,40 +32,79 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
                     $rootscope.token = data.token;
                     $rootscope.role = data.role;
                         
-                    $location.path("/dashboard");             
+                    //$location.path("/dashboard");             
+                    $window.location.href = '#/dashboard';
+                    $window.location.reload();
 
             }).error(function (data,status) {
-                console.log("Incorrect Username/Password");
+                $scope.loginError = "Incorrect Username or Password!";
+                console.log("Incorrect Username or Password!");
             });
         }
     }
     
-    
-    DashBoardService.test($localStorage).success(function (data) {
-
-        $rootscope.loggedin = $localStorage.loggedin;
-        $rootscope.username = $localStorage.username; 
-        $rootscope.token = data.token;
-        $rootscope.role = data.role;
-    
+    //load assets again
+   loadAssets = function() {       
        
-    }).error(function (data,status) {
-            console.log("error");
-    });       
+        DashBoardService.assets($localStorage, $stateParams.type).success(function (data) {
 
+                $rootscope.loggedin = $localStorage.loggedin;
+                $rootscope.username = $localStorage.username;
+                $rootscope.role = $localStorage.role;
+                var assetsData = data.assets; 
+                assetsData = _.where(assetsData, {isDeleted: false});
+
+                $scope.assetsData = assetsData;   
+                $scope.assetsType = $stateParams.type;        
+
+                if(assetsData.length==0) $scope.noAssetsFound = "No assets found";
+                else delete $scope.noAssetsFound;        
+
+                DashBoardService.getUsers($localStorage).success(function (data) {            
+
+                    userData = _.where(data.users, {role: "admin"});            
+                    $scope.users = userData;                                  
+                }).error(function (data,status) {
+                    console.log("error");
+                });     
+
+
+        }).error(function (data,status) {
+            console.log("error");
+        });
+    }
+   
+    
+    //load all assets
+    loadAssets();
     
     //get assets function 
-    DashBoardService.assets($localStorage, $stateParams.type).success(function (data) {
+   /* DashBoardService.assets($localStorage, $stateParams.type).success(function (data) {
 
         $rootscope.loggedin = $localStorage.loggedin;
         $rootscope.username = $localStorage.username;
         $rootscope.role = $localStorage.role;
-        $scope.assetsData = data.assets;   
-        $scope.assetsType = $stateParams.type;   
+        var assetsData = data.assets; 
+        assetsData = _.where(assetsData, {isDeleted: false});
+        
+        $scope.assetsData = assetsData;   
+        $scope.assetsType = $stateParams.type;        
+
+        if(assetsData.length==0) $scope.noAssetsFound = "No assets found";
+        else delete $scope.noAssetsFound;        
+        
+        DashBoardService.getUsers($localStorage).success(function (data) {            
+
+            userData = _.where(data.users, {role: "admin"});            
+            $scope.users = userData;                                  
+        }).error(function (data,status) {
+            console.log("error");
+        });     
+        
         
     }).error(function (data,status) {
         console.log("error");
-    });
+    });*/
     
 
     //add asset function
@@ -111,6 +150,61 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     }
     
     
+    
+
+     $scope.searchAsset = function() { 
+ 
+        var inputData = {
+            primaryOwnerId: $scope.selOwnerName,
+            token: $localStorage.token
+        } 
+        
+        DashBoardService.searchAssets(inputData).success(function (data) {
+        
+            $rootscope.loggedin = $localStorage.loggedin;
+            $rootscope.username = $localStorage.username;
+            $rootscope.role = $localStorage.role;
+            var assetsData = data.assets; 
+            assetsData = _.where(assetsData, {isDeleted: false});
+
+            $scope.assetsData = assetsData;   
+            $scope.assetsType = $stateParams.type;        
+
+            if(assetsData.length==0) $scope.noAssetsFound = "No assets found";
+            else delete $scope.noAssetsFound;        
+
+            DashBoardService.getUsers($localStorage).success(function (data) {            
+
+                userData = _.where(data.users, {role: "admin"});            
+                $scope.users = userData;                                  
+            }).error(function (data,status) {
+                console.log("error");
+            }); 
+
+
+
+        }).error(function (data,status) {
+            console.log("error");
+        });
+    
+        
+    }
+    
+     //****************************
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
     $scope.editAsset = function() {
         
            var inputData = {
@@ -142,27 +236,46 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         });        
     }
     
-
-   //load assets again
-   loadAssets = function() {
-       
-       DashBoardService.assets($localStorage, $stateParams.type).success(function (data) {
-
-            $rootscope.loggedin = $localStorage.loggedin;
-            $rootscope.username = $localStorage.username;
-            $scope.assetsData = data.assets;   
-            $scope.assetsType = $stateParams.type;   
-
+    //disable asset function    
+    $scope.disableAsset = function(id) {
+        $localStorage.disable = "yes"
+                
+        DashBoardService.disableAsset($localStorage, id).success(function (data) {
+           loadAssets();
         }).error(function (data,status) {
             console.log("error");
-        });            
+        });        
     }
+    
+
    
    
    //load Requests again
    loadRequests = function() {
        DashBoardService.getRequests($localStorage).success(function (data) {
-            $scope.requestData = data.requests;          
+           
+          // $scope.requestData = data.requests;
+           if( $localStorage.role=='admin'){
+                var requests = _.filter(data.requests, function(reqs){ 
+                    if(reqs.request.primaryOwnerId==$localStorage.username){
+                      return true;
+                    }            
+                });
+           }else{
+               var requests = _.filter(data.requests, function(reqs){ 
+                    if(reqs.request.requestorId==$localStorage.username){
+                      return true;
+                    }            
+               });   
+           }
+           
+           $scope.requestData = requests;
+                      
+           if(data.requests.length>0) {
+                delete $scope.noRequestData
+           }else {
+                $scope.noRequestData = "No requests found!"
+           }
         }).error(function (data,status) {
             console.log("error");
         });                 
@@ -171,14 +284,9 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
    
     //get requests function  
     if($location.path()=="/requests") {  
-        DashBoardService.getRequests($localStorage).success(function (data) {
-            $scope.requestData = data.requests;          
-        }).error(function (data,status) {
-            console.log("error");
-        });         
+        loadRequests();
     }
-   
-    
+       
     
      //add asset function
     $scope.requestAsset = function() { 
@@ -188,15 +296,32 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
             duration: $scope.duration,
             durationRange: $scope.durationRange,
             token: $rootscope.token
-        }        
+        } 
         
-        DashBoardService.requestAsset(inputData, $stateParams.reqAssetId).success(function (data) {
-            $scope.status = data.status;
-            $scope.ack = data.message;
-       
-        }).error(function (data,status) {
-            console.log("error");
-        });
+        var validDuration = "";
+        if(inputData.duration) validDuration = /^\d+$/.test(inputData.duration);        
+    
+        if(inputData.duration && inputData.durationRange ){
+            
+            if(inputData.duration && inputData.durationRange ){  
+                 
+                DashBoardService.requestAsset(inputData, $stateParams.reqAssetId).success(function (data) {
+                    delete formFieldsMissing;
+                    $scope.status = data.status;
+                    $scope.ack = data.message;
+                }).error(function (data,status) {
+                    console.log("error");
+                });
+                
+            }  else{
+                $scope.formFieldsMissing = "Duration must be a numeric value";
+                console.log("Duration must be a numeric value");
+            }
+        }else{
+             $scope.formFieldsMissing = "Form fields missing!";
+             console.log("Form fields missing!");
+        }
+        
     }
     
     
@@ -227,26 +352,35 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
     
      //assign asset function
     $scope.assignAsset = function() { 
- 
-        var inputData = {
-            assignTo: $scope.assignTo, 
-            fromDate: $scope.fromDate, 
-            toDate: $scope.toDate, 
-            remarks: $scope.remarks, 
-            token: $rootscope.token
-        } 
+        
+        $scope.dateIncorrect = "";
+        
+        if(isValidDate($scope.fromDate) && isValidDate($scope.toDate)){
+            var inputData = {
+                assignTo: $scope.assignTo, 
+                fromDate: $scope.fromDate, 
+                toDate: $scope.toDate, 
+                remarks: $scope.remarks, 
+                token: $rootscope.token
+            } 
 
-        if($scope.assignTo && $scope.fromDate && $scope.toDate && $scope.token){
-            DashBoardService.assignAsset(inputData, $stateParams.assetId).success(function (data) {
-                $scope.status = data.status;
-                $scope.ack = data.message;
+            if($scope.assignTo && $scope.fromDate && $scope.toDate && $scope.token){
+                DashBoardService.assignAsset(inputData, $stateParams.assetId).success(function (data) {
+                    $scope.status = data.status;
+                    $scope.ack = data.message;
 
-            }).error(function (data,status) {
-                console.log("error");
-            });
+                }).error(function (data,status) {
+                    console.log("error");
+                });
+            }else{
+                $scope.dateIncorrect = "Form fields missing!";
+                console.log("Form fields missing!");
+            }
         }else{
-            console.log("Form fields missing!");
+            $scope.dateIncorrect = "Please check the dates entered!";
+            console.log("Please check the dates entered!");
         }
+        
     }
     
     //view Asset function
@@ -282,121 +416,44 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
    
    // get counts for Dashboard
    if($location.path().includes("dashboard")) {    
-       console.log("Svvvvvvvvvvvvvvvvvvvvvvv");
+       
+        DashBoardService.assets($localStorage, $stateParams.type).success(function (data) {
+
+            $rootscope.loggedin = $localStorage.loggedin;
+            $rootscope.username = $localStorage.username;
+            $rootscope.role = $localStorage.role;
+            var assetsData = data.assets; 
+           
+            assetsData = _.where(assetsData, {isDeleted: false});
+            $scope.totalAssets = assetsData.length ? assetsData.length : 0;
+            
+            assetsFree = _.where(assetsData, {isFree: true});            
+            $scope.freeAssets = assetsFree.length ? assetsFree.length : 0;
+            
+            assetsOwned = _.where(assetsData, {primaryOwner: $localStorage.username});            
+            $scope.ownedAssets = assetsOwned.length ? assetsOwned.length : 0;
+            
+            assetsAssignedToMe = _.where(assetsData, {currentOwner: $localStorage.username});            
+            $scope.assignedToMeAssets = assetsAssignedToMe.length ? assetsAssignedToMe.length : 0;
+
+        }).error(function (data,status) {
+        console.log("error");
+        });
        
    }
    
    
     
-    
-   
-   /*
-   
-   
-   
-  $scope.today = function() {
-    $scope.dt = new Date();
-  };
-  $scope.today();
-
-  $scope.clear = function() {
-    $scope.dt = null;
-  };
-
-  $scope.inlineOptions = {
-    customClass: getDayClass,
-    minDate: new Date(),
-    showWeeks: true
-  };
-
-  $scope.dateOptions = {
-    dateDisabled: disabled,
-    formatYear: 'yy',
-    maxDate: new Date(2020, 5, 22),
-    minDate: new Date(),
-    startingDay: 1
-  };
-
-  // Disable weekend selection
-  function disabled(data) {
-    var date = data.date,
-      mode = data.mode;
-    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-  }
-
-  $scope.toggleMin = function() {
-    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-  };
-
-  $scope.toggleMin();
-
-  $scope.open1 = function() {
-    $scope.popup1.opened = true;
-  };
-
-  $scope.open2 = function() {
-    $scope.popup2.opened = true;
-  };
-
-  $scope.setDate = function(year, month, day) {
-    $scope.dt = new Date(year, month, day);
-  };
-
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  $scope.format = $scope.formats[0];
-  $scope.altInputFormats = ['M!/d!/yyyy'];
-
-  $scope.popup1 = {
-    opened: false
-  };
-
-  $scope.popup2 = {
-    opened: false
-  };
-
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  var afterTomorrow = new Date();
-  afterTomorrow.setDate(tomorrow.getDate() + 1);
-  $scope.events = [
-    {
-      date: tomorrow,
-      status: 'full'
-    },
-    {
-      date: afterTomorrow,
-      status: 'partially'
+    //date validator function
+    function isValidDate(date) {
+        var matches = /^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/.exec(date);
+        if (matches == null) return false;
+        var d = matches[2];
+        var m = matches[1] - 1;
+        var y = matches[3];
+        var composedDate = new Date(y, m, d);
+        return composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y;
     }
-  ];
-
-  function getDayClass(data) {
-    var date = data.date,
-      mode = data.mode;
-    if (mode === 'day') {
-      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-      for (var i = 0; i < $scope.events.length; i++) {
-        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-        if (dayToCheck === currentDay) {
-          return $scope.events[i].status;
-        }
-      }
-    }
-
-    return '';
-  }*/
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
 
 }]);
@@ -421,4 +478,3 @@ app.directive('ngConfirmClick', [
             }
         };
 }])
-

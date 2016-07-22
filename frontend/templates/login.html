@@ -4,8 +4,13 @@
         <div class="pen-title">
             <h1> Asset Management System (ASM)</h1>
         </div>
+        
+        <div class="alert alert-danger" role="alert" ng-if="loginError">
+            {{loginError}}
+        </div>
 
         <div class="module form-module">
+            
             <div class="toggle"><i class="fa fa-times fa-pencil"></i>
                 <div class="tooltip">Click Me</div>
             </div>

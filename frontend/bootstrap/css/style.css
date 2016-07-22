@@ -395,27 +395,6 @@ img {
 
 }
 
-
-/* Table CSS */
-/*.CSSTable {
-    width: 100px;
-}
-
-td, th {
-    height: 3.5rem;
-    border: 1px solid lightblue;
-    text-align: left;
-}
-th {
-    background: #5383aa;
-    border-color: white;
-    color: #fff;
-    font-weight: bold;
-    font-size: 13px;
-    border: 1px solid #fff;
-
-}*/
-
 .searchResult {
     margin-top:20px;
     width: 680px;

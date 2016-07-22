@@ -1,4 +1,4 @@
-var app = angular.module('dashboardApp', ['ui.router','DashBoardControllerModule','DashBoardServiceModule','showDetailControllerModule', 'ngStorage', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'ngAnimate', 'ui.bootstrap']);
+var app = angular.module('dashboardApp', ['ui.router','DashBoardControllerModule','DashBoardServiceModule','showDetailControllerModule', 'ngStorage', 'ui.bootstrap', 'ui.bootstrap.modal', 'ngAnimate', 'ui.bootstrap']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');

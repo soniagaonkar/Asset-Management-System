@@ -10,7 +10,7 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="bootstrap/css/style.css" rel="stylesheet">
         <link href="bootstrap/css/font-awesome.min.css" rel="stylesheet">
-        <link href="bootstrap/css/datetimepicker.css" rel="stylesheet">
+        <link href="bootstrap/css/datepicker.css" rel="stylesheet">
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -49,7 +49,7 @@
     <body id="index">
         <div class="container"> 
             <div class="row clearfix">
-                <div class="col-md-15 column">
+                <div class="col-md-12 column">
                     <!--div class="row clearfix">
                         <div class="list-group header-block">
                         </div>
@@ -90,21 +90,8 @@
                                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                                     <ul class="nav navbar-nav side-nav">
                                         <li class="active">
-                                            <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                            <a href="/#/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                                         </li>
-                                        <!--li>
-                                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                                        </li>
-                                        <li>
-                                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                                        </li>
-                                        <li>
-                                            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                                        </li>
-                                        <li>
-                                            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                                        </li-->
-                                      
                                         <li>
                                             <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-table"></i> Assets <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul id="demo" class="collapse">
@@ -114,7 +101,7 @@
                                                 <li>
                                                     <a href="/#/assets/free">Free assets</a>
                                                 </li>
-                                                <li>
+                                                <li ng-if="role=='admin'">
                                                     <a href="/#/assets/owned">Owned assets</a>
                                                 </li>
                                                 <li>
@@ -122,13 +109,10 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li  ng-show="role=='admin'">
+                                        <li>
                                             <a href="/#/requests"><i class="fa fa-fw fa-file"></i> Requests</a>
                                         </li>
-                                        <!--li>
-                                            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-                                        </li-->
-                                    </ul>
+                                      </ul>
                                 </div>
                                 <!-- /.navbar-collapse -->
                             </nav>
@@ -148,19 +132,12 @@
                 </div>
             </div>
         </div>
+        
+        <script type="text/javascript" src="lib/angular.js"></script>         
+        <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>-->
+        <script type="text/javascript" src="lib/angular-animate.js"></script>
+        <script type="text/javascript" src="lib/ui-bootstrap-tpls-1.3.3.js"></script>
 
-
-        <!--script type="text/javascript" src="lib/angular.js"></script>-->
-        
-     
-        
-         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-        
-           
-       <script type="text/javascript"src="bootstrap/js/datetimepicker.js"></script>
-        
         <script type="text/javascript" src="lib/underscore.js"></script>
         <script type="text/javascript" src="lib/angular-ui-router.js"></script>
         <script type="text/javascript" src="lib/ngStorage.js"></script>
@@ -171,14 +148,17 @@
         <script type="text/javascript" src="services/DashBoardServiceModule.js"></script>
         <script type="text/javascript" src="services/configService.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap.js"></script>
+       <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap.js"></script>-->
+                <script type="text/javascript" src="bootstrap/js/dirPagination.js"></script> 
+
         <script type="text/javascript" src="bootstrap/js/ui-bootstrap-0.6.0.min.js"></script>
         <script type="text/javascript" src="bootstrap/js/ui-bootstrap-tpls-0.13.4.min.js"></script>
         <script type="text/javascript" src="bootstrap/js/dirPagination.js"></script>        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-cookies.js"></script>
-        
-        <script src="bootstrap/js/plugins/morris/raphael.min.js"></script>
+        <script src="lib/angular-cookies.js"></script>
+
+        <!--<script src="bootstrap/js/plugins/morris/raphael.min.js"></script>
         <script src="bootstrap/js/plugins/morris/morris.min.js"></script>
-        <script src="bootstrap/js/plugins/morris/morris-data.js"></script>       
+        <script src="bootstrap/js/plugins/morris/morris-data.js"></script>-->
+        
     </body>
 </html>

@@ -22,6 +22,10 @@
             <span class="glyphicon glyphicon-ok" style="color:green"></span> {{ack}}
         </div>
         
+         <div class="alert alert-danger" role="alert" ng-if="formFieldsMissing">
+            {{formFieldsMissing}}
+        </div>
+                
         <div class="col-lg-6">                      
             <form id="addAsset-form" name="addAsset-form" method="POST" role="form">
                 <div class="form-group">
@@ -34,7 +38,7 @@
                 </div>
             
                 <div class="input-group">
-                     <input type="number" name="duration" id="duration" ng-model="duration" class="form-control" style="width:100px;"> 
+                     <input type="number" min="1" name="duration" id="duration" ng-model="duration" class="form-control" style="width:100px;"> 
                      <span class="input-group-addon">-</span>
                      <select name="durationRange" id="durationRange" ng-model="durationRange" ng-init="durationRange='months'" class="form-control">
                       <option value="days">Day(s)</option>
