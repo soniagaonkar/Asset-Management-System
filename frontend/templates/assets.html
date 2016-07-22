@@ -15,29 +15,18 @@
                     </li>
                 </ol>
                     <a href="/#/addAsset" ng-if="role=='admin'"><button type="button" class="btn btn-xs btn-info">Add Asset</button></a> 
-            </div>
-            
-            <div class="col-lg-4">     
-                <form id="addAsset-form" name="addAsset-form" method="POST" role="form">               
-                     <div class="form-group">
-                        <label>Filter assets by owner</label>
-                        <select ng-model="selOwnerName"  ng-init="selOwnerName = selOwnerName" ng-options="user.loginId as user.loginId for user in users" required class="form-control"></select>
-                        <button type="submit" class="btn btn-default" ng-click="searchAsset()">Search</button>
-                    </div>
-                </form>
-            </div>
-            
-            
-          
-            
+            </div>          
         </div>
         <!-- /.row -->
         
-          <div class="row">
-            <div class="col-xs-2">Filter assets by owner:</div>
-            <div class="col-xs-3">div 2</div>
-            <div class="col-xs-3">div 3</div>
-            </div>
+        <br />
+        <div class="row" style="border: 1px solid; padding:10px;">
+            <form id="addAsset-form" name="addAsset-form" method="POST" role="form">
+                <div class="col-xs-3"><label>Filter assets by owner</label>:</div>
+                <div class="col-xs-2"><select ng-model="selOwnerName"  ng-init="selOwnerName = selOwnerName" ng-options="user.loginId as user.loginId for user in users" required class="form-control" style="margin-left:-75px;"></select></div>
+                <div class="col-xs-2"><button type="submit" class="btn btn-default" ng-click="searchAsset()" style="margin-left:-85px">Search</button></div>
+            </form>
+        </div>
 
         
         <br />
