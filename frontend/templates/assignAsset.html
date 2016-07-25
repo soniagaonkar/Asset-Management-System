@@ -28,10 +28,9 @@
         
         <div class="col-lg-6">                      
             <form id="addAsset-form" name="addAsset-form" method="POST" role="form">
-               
                  <div class="form-group">
                     <label>Assign to</label>
-                    <select ng-model="assignTo"  ng-init="assignTo = assignTo" ng-options="user.loginId as user.loginId for user in users" required class="form-control"></select>
+                    <select ng-model="assignTo"  ng-init="assignTo = assignTo" ng-options="user.loginId as user.loginId for user in allUsers" required class="form-control"></select>
                 </div>
                 
                  <div class="form-group">

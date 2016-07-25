@@ -357,13 +357,17 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         });
     }
 
-    //Assig asset UI data
+    //Assign asset UI data
     if($location.path().includes("assignAsset") && $stateParams.assetId) {
         
         $scope.assignTo = $stateParams.assignTo ? $stateParams.assignTo : "";
 
         DashBoardService.getUsers($localStorage).success(function (data) {
-            $scope.users = data.users;                                  
+            $scope.allUsers = data.users;
+            
+            console.log( data.users)
+            console.log("oooooooooooooo")
+            
         }).error(function (data,status) {
             console.log("error");
         });         
