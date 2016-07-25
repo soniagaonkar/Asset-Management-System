@@ -7,9 +7,12 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
 
         var inputData = {
             username : $scope.username,
-            password : $scope.password,
+            password : $scope.password
         }       
 
+        delete $scope.loginMsgStatus;
+        delete $scope.loginMsgText;
+               
         if(inputData.username && inputData.password) {
 
             DashBoardService.login(inputData).success(function (data) {    
@@ -42,6 +45,39 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
             });
         }
     }
+    
+    
+    $scope.register = function() {
+      
+        var inputData = {
+            username : $scope.username,
+            password : $scope.password,
+            role: $scope.selRole ? $scope.selRole : 'user'
+        }
+
+        delete $scope.loginError;
+      
+        if(inputData.username && inputData.password) {
+            
+            DashBoardService.register(inputData).success(function (data) {    
+
+                if(data){
+                    $scope.loginMsgText = data.message;
+                    $scope.loginMsgStatus = data.status;
+                }
+                
+            }).error(function (data,status) {
+                $scope.loginError = "Error!";
+                console.log("Error!");
+            });
+        
+        }else{
+             $scope.loginError = "Form fields missing!";
+             console.log("Form fields missing!");
+        }
+      
+  }
+    
     
     //load assets again
    loadAssets = function() {       
@@ -149,9 +185,7 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         });    
     }
     
-    
-    
-
+   
      $scope.searchAsset = function() { 
  
         var inputData = {
@@ -190,20 +224,6 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         
     }
     
-     //****************************
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
     
     $scope.editAsset = function() {
         

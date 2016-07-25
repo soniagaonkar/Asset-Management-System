@@ -10,9 +10,13 @@ ssm.factory('DashBoardService',function($http, $location){
             return $http.post(base_url + '/login', inputData);
         },        
         
-        test:function(inputData) {
+     /*   test:function(inputData) {
             return $http.post(base_url + '/login', inputData);
-        },
+        },*/
+        
+        register:function(inputData) {
+            return $http.post(base_url + '/register', inputData);
+        }, 
 
         logout:function(inputData) {        
             return $http.get(base_url + '/logout', inputData);
