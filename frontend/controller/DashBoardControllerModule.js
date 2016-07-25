@@ -365,9 +365,6 @@ scm.controller('DashBoardController', ['$scope', '$rootScope','DashBoardService'
         DashBoardService.getUsers($localStorage).success(function (data) {
             $scope.allUsers = data.users;
             
-            console.log( data.users)
-            console.log("oooooooooooooo")
-            
         }).error(function (data,status) {
             console.log("error");
         });         
